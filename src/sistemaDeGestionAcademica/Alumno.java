@@ -1,4 +1,4 @@
-package modelo;
+package sistemaDeGestionAcademica;
 
 public class Alumno {
 	private String nombre;

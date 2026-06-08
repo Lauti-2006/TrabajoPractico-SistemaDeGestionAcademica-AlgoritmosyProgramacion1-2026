@@ -1,4 +1,4 @@
-package modelo;
+package sistemaDeGestionAcademica;
 
 public class Comision {
 	private String nombre;
@@ -7,7 +7,7 @@ public class Comision {
 	private boolean abierta;
 	
 	/**
-	 * pre : nombre no es nulo ni está vacío, cupoAlumnos es mayor a 0, cupoDocentes es mayor a 0.
+	 * pre: nombre no es nulo ni está vacío, cupoAlumnos es mayor a 0, cupoDocentes es mayor a 0.
 	 * post: inicializa la Comisión con el nombre indicado (sin espacios al inicio/final),
 	 * crea los arreglos de alumnos y docentes con el tamaño de los cupos, y deja la inscripción abierta.
 	 * @param nombre nombre de la comisión

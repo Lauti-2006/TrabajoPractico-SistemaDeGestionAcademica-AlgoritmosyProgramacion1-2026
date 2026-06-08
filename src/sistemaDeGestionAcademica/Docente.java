@@ -6,7 +6,7 @@ public class Docente {
 	private int antiguedad;
 
 	/**
-	 * pre : nombre no es nulo ni está vacío, catedra no es nula ni está vacía, antiguedad es mayor o igual a 0.
+	 * pre: nombre no es nulo ni está vacío, catedra no es nula ni está vacía, antiguedad es mayor o igual a 0.
 	 * post: inicializa el Docente con el nombre, la cátedra y la antigüedad indicados.
 	 * @param nombre nombre completo del docente
 	 * @param catedra nombre de la cátedra a cargo
