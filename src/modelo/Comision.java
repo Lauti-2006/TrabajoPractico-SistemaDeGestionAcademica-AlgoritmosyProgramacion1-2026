@@ -1,7 +1,4 @@
-package comision;
-
-import alumno.Alumno;
-import docente.Docente;
+package modelo;
 
 public class Comision {
 	private String nombre;
@@ -21,9 +18,7 @@ public class Comision {
 	 * @throws Error si el cupo de docentes es cero o negativo 
 	 */
 	public Comision(String nombre, int cupoAlumnos, int cupoDocentes) {
-		if (nombre == null || nombre.isBlank()) {
-			throw new Error("El Nombre Ingresado No Puede estar Vacio");
-		}
+		cambiarNombre(nombre);
 
 		if (cupoAlumnos <= 0) {
 			throw new Error("El Cupo de Alumnos No Debe ser Menor o Igual a 0");
@@ -33,7 +28,6 @@ public class Comision {
 			throw new Error("El Cupo de Docentes No Debe ser Menor o Igual a 0");
 		}
 
-		this.nombre = nombre.trim();
 		this.alumnos = new Alumno[cupoAlumnos];
 		this.docentes = new Docente[cupoDocentes];
 		this.abierta = true;
@@ -43,7 +37,7 @@ public class Comision {
 	 * post: devuelve el nombre de la comisión.
 	 * @return nombre de la comisión
 	 */
-	public String getNombre() {
+	public String obtenerNombre() {
 		return this.nombre;
 	}
 	
@@ -53,7 +47,7 @@ public class Comision {
 	 * @param nombre nuevo nombre de la comisión
 	 * @throws Error si el nombre es nulo o esta vacio
 	 */
-	public void setNombre(String nombre) {
+	public void cambiarNombre(String nombre) {
 		if (nombre == null || nombre.isBlank()) {
 			throw new Error("El Nombre Ingresado No Puede estar Vacio");
 		}
@@ -93,11 +87,11 @@ public class Comision {
 	public boolean agregarAlumno(Alumno alumno) {
 		boolean agregado = false;
 
-		if (abierta && alumno != null && buscarAlumnoPorLegajo(alumno.getLegajo()) == null) {
+		if (this.abierta && alumno != null && buscarAlumnoPorLegajo(alumno.obtenerLegajo()) == null) {
 			int index = 0;
-			while (index < alumnos.length && !agregado) {
-				if (alumnos[index] == null) {
-					alumnos[index] = alumno;
+			while (index < this.alumnos.length && !agregado) {
+				if (this.alumnos[index] == null) {
+					this.alumnos[index] = alumno;
 					agregado = true;
 				}
 				index++;
@@ -116,7 +110,7 @@ public class Comision {
 		int index = 0;
 
 		while (index < this.alumnos.length && alumnoEncontrado == null) {
-			if (this.alumnos[index] != null && this.alumnos[index].getLegajo() == legajo) { // Ponemos el "alumnos[index] != null" por si creamos un Array de Alumnos de tamaño 10, pero solo agregamos 3, las otras posiciones serian null
+			if (this.alumnos[index] != null && this.alumnos[index].obtenerLegajo() == legajo) { // Ponemos el "alumnos[index] != null" por si creamos un Array de Alumnos de tamaño 10, pero solo agregamos 3, las otras posiciones serian null
 				alumnoEncontrado = this.alumnos[index];
 			}
 			index++;
@@ -126,8 +120,9 @@ public class Comision {
 	}
 	
 	/**
-	 * pre : legajo pertenece a un alumno existente en la comision
-	 * post: si encuentra un alumno con ese legajo, lo elimina del arreglo, dejando su posicion en null
+	 * pre : legajo es mayor a 0.
+	 * post: si encuentra un alumno con ese legajo, lo elimina del arreglo, dejando su posicion en nulo.
+	 * Si no lo encuentra, no modifica el arreglo.
 	 * @param alumno alumno a eliminar
 	 * @return true si el alumno fue eliminado exitosamente, false en caso contrario
 	 */
@@ -136,7 +131,7 @@ public class Comision {
 
 		int index = 0;
 		while (index < this.alumnos.length && !alumnoEliminado) {
-			if (this.alumnos[index] != null && this.alumnos[index].getLegajo() == legajo) {
+			if (this.alumnos[index] != null && this.alumnos[index].obtenerLegajo() == legajo) {
 				this.alumnos[index] = null;
 				alumnoEliminado = true;
 			}
@@ -147,8 +142,8 @@ public class Comision {
 	}
 	
 	/**
-	 * pre: legajo pertenece a un alumno existente a la comision
-	 * post: si encuentra el alumno modifica su nombre y el promedio
+	 * pre: legajo es mayor a 0, nuevoNombre no es nulo ni esta vacio y nuevoPromedio esta entre 1.0 y 10.0.
+	 * post: si enceuntra el alumno modifica su nombre y su promedio. Sino lo encuentra, no modifica nada.  
 	 * @param legajo legajo del alumno a modificar
 	 * @param nuevoNombre nuevo nombre del alumno
 	 * @param nuevoPromedio nuevo promedio del alumno
@@ -160,8 +155,8 @@ public class Comision {
 		Alumno alumnoEncontrado = buscarAlumnoPorLegajo(legajo);
 		
 		if(alumnoEncontrado != null) {
-			alumnoEncontrado.setNombre(nuevoNombre);
-			alumnoEncontrado.setPromedio(nuevoPromedio);
+			alumnoEncontrado.cambiarNombre(nuevoNombre);
+			alumnoEncontrado.cambiarPromedio(nuevoPromedio);
 			alumnoModificado = true;
 		}
 		
@@ -179,7 +174,7 @@ public class Comision {
 	public boolean agregarDocente(Docente docente) {
 		boolean agregado = false;
 
-		if (abierta && docente != null) {
+		if (this.abierta && docente != null) {
 			int index = 0;
 
 			while (index < this.docentes.length && !agregado) {
@@ -195,19 +190,21 @@ public class Comision {
 	}
 	
 	/**
-	 * pre: la comision debe estar abierta, el docente no puede ser nulo.
-	 * post: si se encuentra al docente, lo elimina dejando su posicion en nulo.
-	 * @param docente docente a eliminar
+	 * pre: catedra no es nulo ni esta vacia.
+	 * post: si se encuentra al docente con esa catedra, lo elimina del arreglo dejando su posicion en nulo.
+	 * Sino lo encuentra, no modifica el arreglo.
+	 * @param catedra catedra del docente a eliminar
 	 * @return true si el docente fue eliminado, false en caso contrario
 	 */
-	public boolean eliminarDocente(Docente docente) {
+	public boolean eliminarDocente(String catedra) {
 		boolean docenteEliminado = false;
 
-		if (abierta && docente != null) {
+		if (this.abierta && catedra != null && !catedra.isBlank()) {
 			int index = 0;
 
 			while (index < this.docentes.length && !docenteEliminado) {
-				if (this.docentes[index] == docente) {
+				if (this.docentes[index] != null && 
+					this.docentes[index].obtenerCatedra().equals(catedra.trim())) {
 					this.docentes[index] = null;
 					docenteEliminado = true;
 				}
@@ -224,16 +221,14 @@ public class Comision {
 	 */
 	public String listarAlumnos() {
 		String resultado = "";
-		boolean hayAlumnos = false;
 		
 		for(int i = 0; i < this.alumnos.length; i++) {
 			if(this.alumnos[i] != null) {
-				resultado += this.alumnos[i].mostrarDatos() + "\n";
-				hayAlumnos = true;
+				resultado += this.alumnos[i].toString() + "\n";
 			}
 		}
 		
-		if(!hayAlumnos) {
+		if(resultado.isEmpty()) {
 			resultado = "No Hay Alumnos Cargados";
 		}
 		
@@ -247,16 +242,14 @@ public class Comision {
 	 */
 	public String listarDocentes() {
 		String resultado = "";
-		boolean hayDocentes = false;
 		
 		for(int i = 0; i < this.docentes.length; i++) {
 			if(this.docentes[i] != null) {
-				resultado += this.docentes[i].mostrarDatos() + "\n";
-				hayDocentes = true;
+				resultado += this.docentes[i].toString() + "\n";
 			}
 		}
 		
-		if(!hayDocentes) {
+		if(resultado.isEmpty()) {
 			resultado = "No Hay Docentes Cargados";
 		}
 		
@@ -267,7 +260,8 @@ public class Comision {
 	 * post: devuelve los datos de la comision en formato texto.
 	 * @return datos de la comision
 	 */
-	public String mostrarDatos() {
-		return "[Comision]" + "\nNombre: " + getNombre() + " | Esta Abierta: " + (estaAbierta() ? "Si" : "No");
+	@Override
+	public String toString() {
+		return "[Comision]" + "\nNombre: " + obtenerNombre() + " | Esta Abierta: " + (estaAbierta() ? "Si" : "No");
 	}
 }
