@@ -84,7 +84,7 @@ public class Comision {
 	 * @param alumno alumno a agregar
 	 * @return true si el alumno fue agregado, false en caso contrario
 	 */
-	public boolean agregarAlumno(Alumno alumno) {
+	public boolean darAlumnoDeAlta(Alumno alumno) {
 		boolean agregado = false;
 
 		if (this.abierta && alumno != null && buscarAlumnoPorLegajo(alumno.obtenerLegajo()) == null) {
@@ -171,7 +171,7 @@ public class Comision {
 	 * @param docente docente a agregar
 	 * @return true si el docente fue agregado, false en caso contrario
 	 */
-	public boolean agregarDocente(Docente docente) {
+	public boolean darDocenteDeAlta(Docente docente) {
 		boolean agregado = false;
 
 		if (this.abierta && docente != null) {
@@ -233,6 +233,38 @@ public class Comision {
 		}
 		
 		return resultado;
+	}
+	
+	public Alumno[] obtenerAlumnosOrdenados() {
+		int contadorDeAlumnos = 0;
+		for (int i = 0; i < this.alumnos.length; i++) {
+			if (this.alumnos[i] != null) {
+				contadorDeAlumnos++;
+			}
+
+		}
+
+		Alumno[] alumnosOrdenadosPorMayorPromedio = new Alumno[contadorDeAlumnos];
+		int indiceDeGuardado = 0;
+		for(int i = 0; i < this.alumnos.length; i++) {
+			if(this.alumnos[i] != null) {
+				alumnosOrdenadosPorMayorPromedio[indiceDeGuardado] = this.alumnos[i];
+				indiceDeGuardado++;
+			}
+		}
+		
+		for(int i = 0; i < alumnosOrdenadosPorMayorPromedio.length; i++) {
+			for(int j = 0; j < alumnosOrdenadosPorMayorPromedio.length - 1 - i; j++) {
+				if(alumnosOrdenadosPorMayorPromedio[j].obtenerPromedio() < alumnosOrdenadosPorMayorPromedio[j + 1].obtenerPromedio()) {
+					Alumno alumnoAuxiliar = alumnosOrdenadosPorMayorPromedio[j];
+					alumnosOrdenadosPorMayorPromedio[j] = alumnosOrdenadosPorMayorPromedio[j + 1];
+					alumnosOrdenadosPorMayorPromedio[j + 1] = alumnoAuxiliar;
+				}
+			}
+		}
+		
+		return alumnosOrdenadosPorMayorPromedio;
+		
 	}
 	
 	/**
