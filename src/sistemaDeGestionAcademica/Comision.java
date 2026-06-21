@@ -101,6 +101,25 @@ public class Comision {
 	}
 	
 	/**
+	 * post: busca un alumno dentro del arreglo por su nombre.
+	 * @param nombre del alumno buscado
+	 * @return alumno, o null si no existe en dicha comisión
+	 */
+	public Alumno buscarAlumnoPorNombre(String nombre) {
+		Alumno alumnoEncontrado = null;
+		for (int i = 0; i < alumnos.length; i++) {
+			if (this.alumnos[i] != null && this.alumnos[i].obtenerNombre().equals(nombre)) {
+				alumnoEncontrado = this.alumnos[i];
+			}
+		}
+		if (alumnoEncontrado == null) {
+			throw new Error("El alumno no esta en la comision.");
+		}
+		return alumnoEncontrado;
+	}
+	
+	
+	/**
 	 * post: busca un alumno dentro del arreglo por su legajo.
 	 * @param legajo número de legajo del alumno buscado
 	 * @return el alumno encontrado, o null si no existe en la comisión
@@ -110,7 +129,7 @@ public class Comision {
 		int index = 0;
 
 		while (index < this.alumnos.length && alumnoEncontrado == null) {
-			if (this.alumnos[index] != null && this.alumnos[index].obtenerLegajo() == legajo) { // Ponemos el "alumnos[index] != null" por si creamos un Array de Alumnos de tamaño 10, pero solo agregamos 3, las otras posiciones serian null
+			if (this.alumnos[index] != null && this.alumnos[index].obtenerLegajo() == legajo) { 
 				alumnoEncontrado = this.alumnos[index];
 			}
 			index++;
@@ -143,7 +162,7 @@ public class Comision {
 	
 	/**
 	 * pre: legajo es mayor a 0, nuevoNombre no es nulo ni esta vacio y nuevoPromedio esta entre 1.0 y 10.0.
-	 * post: si enceuntra el alumno modifica su nombre y su promedio. Sino lo encuentra, no modifica nada.  
+	 * post: si encuentra el alumno modifica su nombre y su promedio. Sino lo encuentra, no modifica nada.  
 	 * @param legajo legajo del alumno a modificar
 	 * @param nuevoNombre nuevo nombre del alumno
 	 * @param nuevoPromedio nuevo promedio del alumno
@@ -235,6 +254,10 @@ public class Comision {
 		return resultado;
 	}
 	
+	/**
+	 * post: se devuelve un arreglo con los alumnos ordenados de mayor a menor según su promedio.
+	 * @return un arreglo con los alumnos registrados ordenados de mayor a menor según su promedio
+	 */
 	public Alumno[] obtenerAlumnosOrdenados() {
 		int contadorDeAlumnos = 0;
 		for (int i = 0; i < this.alumnos.length; i++) {
@@ -264,7 +287,6 @@ public class Comision {
 		}
 		
 		return alumnosOrdenadosPorMayorPromedio;
-		
 	}
 	
 	/**
