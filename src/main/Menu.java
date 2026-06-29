@@ -84,7 +84,7 @@ public class Menu {
 			String nombreAModificar = entrada.nextLine();
 			IO.print("> Nuevo promedio: ");
 			double promedioAModificar = Double.parseDouble(entrada.nextLine());
-			comision.buscarAlumnoPorLegajo(legajoAModificar);
+			comision.modificarAlumno(legajoAModificar, nombreAModificar, promedioAModificar);
 			IO.println("\n[ÉXITO] Alumno modificado correctamente.");
 			break;
 		case 4:
