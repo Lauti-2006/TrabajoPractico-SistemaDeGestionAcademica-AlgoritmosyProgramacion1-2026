@@ -110,7 +110,7 @@ public class Menu {
 			}
 			break;
 		case 6:
-			/*IO.println("\n[SISTEMA] ASIGNAR CRONOGRAMA");
+			IO.println("\n[SISTEMA] ASIGNAR CRONOGRAMA");
 			IO.println("> Seleccioná el turno: 0 = Mañana | 1 = Tarde | 2 = Noche");
 			int turnoAAsignar = Integer.parseInt(entrada.nextLine());
 			IO.println(
@@ -120,7 +120,7 @@ public class Menu {
 			String materia = entrada.nextLine();
 			comision.asignarTurno(turnoAAsignar, diaAAsignar, materia);
 			IO.println("\n[ÉXITO] Cronograma actualizado correctamente.");
-			this.imprimirCronograma();*/
+			this.imprimirCronograma();
 			break;
 		case 0:
 			break;
@@ -129,7 +129,7 @@ public class Menu {
 		}
 	}
 
-	/*private void imprimirCronograma() {
+	private void imprimirCronograma() {
 		String[][] cronograma = comision.obtenerCronograma();
 		String[] turnos = { "Mañana", "Tarde", "Noche" };
 		IO.println("\tLunes\t\tMartes\t\tMiércoles\tJueves\t\tViernes\t\tSábado");
@@ -140,7 +140,7 @@ public class Menu {
 			}
 			IO.println();
 		}
-	}*/
+	}
 
 	private void esperarTecla() {
 		IO.print("\n> Pulsá Enter para continuar...");

@@ -220,4 +220,78 @@ class ComisionTest {
 	    assertEquals("Algebra", com.obtenerNombre());
 	    assertTrue(com.estaAbierta());
 	}
+
+	@Test
+	void asignarTurnoExitosoTest() {
+	    com.asignarTurno(0, 0, "Matemática"); 
+	    String[][] cronograma = com.obtenerCronograma();
+	    assertEquals("Matemática", cronograma[0][0]);
+	}
+
+	@Test
+	void asignarTurnoHorarioOcupadoTest() {
+	    com.asignarTurno(0, 0, "Matemática");
+	    assertThrows(Error.class, () -> com.asignarTurno(0, 0, "Física"));
+	}
+
+	@Test
+	void asignarTurnoDiaInvalidoTest() {
+	    assertThrows(Error.class, () -> com.asignarTurno(0, 6, "Matemática")); 
+	}
+
+	@Test
+	void asignarTurnoTurnoInvalidoTest() {
+	    assertThrows(Error.class, () -> com.asignarTurno(3, 0, "Matemática")); 
+	}
+
+	@Test
+	void asignarTurnoMateriaNulaTest() {
+	    assertThrows(Error.class, () -> com.asignarTurno(0, 0, null));
+	}
+
+	@Test
+	void asignarTurnoMateriaVaciaTest() {
+	    assertThrows(Error.class, () -> com.asignarTurno(0, 0, ""));
+	}
+
+	@Test
+	void asignarTurnoSabadoSoloMananaTest() {
+	    com.asignarTurno(0, 5, "Programación"); 
+	    assertThrows(Error.class, () -> com.asignarTurno(1, 5, "Programación")); 
+	    assertThrows(Error.class, () -> com.asignarTurno(2, 5, "Programación")); 
+	}
+
+	@Test
+	void obtenerCronogramaDevuelveCopiaTest() {
+	    com.asignarTurno(1, 2, "Álgebra"); 
+	    String[][] cronograma1 = com.obtenerCronograma();
+	    String[][] cronograma2 = com.obtenerCronograma();
+	    
+	    cronograma1[2][1] = "Modificado";
+	    assertNotEquals(cronograma1[2][1], cronograma2[2][1]);
+	}
+
+	@Test
+	void obtenerCronogramaInicialVacioTest() {
+	    String[][] cronograma = com.obtenerCronograma();
+	    for (int i = 0; i < cronograma.length; i++) {
+	        for (int j = 0; j < cronograma[i].length; j++) {
+	            assertNull(cronograma[i][j]);
+	        }
+	    }
+	}
+
+	@Test
+	void asignarMultiplesTurnosTest() {
+	    com.asignarTurno(0, 0, "Matemática");  
+	    com.asignarTurno(1, 1, "Física");      
+	    com.asignarTurno(2, 2, "Química");      
+	    com.asignarTurno(0, 5, "Programación");
+	    
+	    String[][] cronograma = com.obtenerCronograma();
+	    assertEquals("Matemática", cronograma[0][0]);
+	    assertEquals("Física", cronograma[1][1]);
+	    assertEquals("Química", cronograma[2][2]);
+	    assertEquals("Programación", cronograma[5][0]);
+	}
 }

@@ -1,118 +1,158 @@
 package sistemaDeGestionAcademica;
 
-public class Docente {
-	private String nombre;
-	private String catedra;
-	private int antiguedad;
+public class Docente extends Persona {
+    private String nombre;
+    private String catedra;
+    private int antiguedad;
 
-	/**
-	 * pre: nombre no es nulo ni está vacío, catedra no es nula ni está vacía, antiguedad es mayor o igual a 0.
-	 * post: inicializa el Docente con el nombre, la cátedra y la antigüedad indicados.
-	 * @param nombre nombre completo del docente
-	 * @param catedra nombre de la cátedra a cargo
-	 * @param antiguedad años de antigüedad 
-	 * @throws Error si el nombre es nulo o esta vacio 
-	 * @throws Error si el nombre de la catedra es nulo o esta vacio
-	 * @throws Error si la antiguedad es menor a cero 
-	 */
-	public Docente(String nombre, String catedra, int antiguedad) {
-		cambiarNombre(nombre);
-		cambiarCatedra(catedra);
-		cambiarAntiguedad(antiguedad);
-	}
-	
-	/**
-	 * post: devuelve el nombre del docente.
-	 * @return nombre del docente
-	 */
-	public String obtenerNombre() {
-		return nombre;
-	}
-	
-	/**
-	 * pre : nombre no es nulo ni está vacío.
-	 * post: cambia el nombre del docente por el valor indicado.
-	 * @param nombre nuevo nombre del docente
-	 * @throws Error si el nombre es nulo o esta vacio
-	 */
-	public void cambiarNombre(String nombre) {
-		if (nombre == null || nombre.isBlank()) {
-			throw new Error("El Nombre Ingresado No Puede estar Vacio");
-		}
+    /**
+     * Inicializa un nuevo docente con el nombre normalizado, la cátedra y la antigüedad indicados.
+     * 
+     * @pre nombre no es nulo ni está vacío.
+     * @pre catedra no es nula ni está vacía.
+     * @pre antiguedad es mayor o igual a 0.
+     * @post se crea un Docente con los datos proporcionados y el nombre normalizado.
+     * 
+     * @param nombre nombre completo del docente (no nulo, no vacío)
+     * @param catedra nombre de la cátedra a cargo (no nulo, no vacío)
+     * @param antiguedad años de antigüedad (mayor o igual a 0)
+     * @throws Error si el nombre es nulo o está vacío
+     * @throws Error si la cátedra es nula o está vacía
+     * @throws Error si la antigüedad es menor a 0
+     */
+    public Docente(String nombre, String catedra, int antiguedad) {
+        this.cambiarNombre(nombre);
+        this.cambiarCatedra(catedra);
+        this.cambiarAntiguedad(antiguedad);
+    }
 
-		this.nombre = normalizarNombreDelDocente(nombre);
-	}
-	
-	/**
-	 * post: devuelve la cátedra del docente.
-	 * @return nombre de la cátedra
-	 */
-	public String obtenerCatedra() {
-		return catedra;
-	}
-	
-	/**
-	 * pre : catedra no es nula ni está vacía.
-	 * post: cambia la cátedra del docente.
-	 * @param catedra nueva cátedra
-	 * @throws Error si el nombre de la catedra es nulo o esta vacio
-	 */
-	public void cambiarCatedra(String catedra) {
-		if (catedra == null || catedra.isBlank()) {
-			throw new Error("El Nombre de la Catedra Ingresado No Puede estar Vacio");
-		}
-		this.catedra = catedra.trim();
-	}
-	
-	/**
-	 * post: devuelve la antigüedad del docente.
-	 * @return cantidad de años de antigüedad
-	 */
-	public int obtenerAntiguedad() {
-		return antiguedad;
-	}
-	
-	/**
-	 * pre: antiguedad es mayor o igual a 0.
-	 * post: cambia la antigüedad del docente.
-	 * @param antiguedad nueva antigüedad
-	 * @throws Error si la antiguedad es menor a cero
-	 */
-	public void cambiarAntiguedad(int antiguedad) {
-		if (antiguedad < 0) {
-			throw new Error("La Antiguedad No Puede ser Menor a 0");
-		}
-		this.antiguedad = antiguedad;
-	}
-	
-	/**
-	 * post: devuelve los datos del docente en formato texto.
-	 * @return datos del docente
-	 */
-	@Override
-	public String toString() {
-		return "[Docente]" + "\nNombre: " + obtenerNombre() + " | Catedra: " + obtenerCatedra() + " | Antiguedad: " + obtenerAntiguedad();
-	}
-	
-	/**
-	 * pre : nombre no es nulo ni esta vacio.
-	 * post: devuelve el nombre normalizado en minuscula, sin acentos, 
-	 * sin caracteres especiales y sin espacios sobrantes.
-	 * @param nombre nombre a normalizar
-	 * @return nombre normalizado
-	 */
-	private String normalizarNombreDelDocente(String nombre) {
-		String normalizado = nombre.trim().toLowerCase();
-		String conAcentos = "áéíóúüñ";
-		String sinAcentos = "aeiouun";
-		
-		for (int i = 0; i < conAcentos.length(); i++) {
-			normalizado = normalizado.replace(conAcentos.charAt(i), sinAcentos.charAt(i));
-		}
+    /**
+     * Devuelve el nombre del docente.
+     * 
+     * @post devuelve el nombre actual del docente.
+     * @return nombre del docente
+     */
+    public String obtenerNombre() {
+        return this.nombre;
+    }
 
-		normalizado = normalizado.replaceAll("[^a-z0-9 ]", " ");
-		normalizado = normalizado.replaceAll("\\s+", " ");
+    /**
+     * Cambia el nombre del docente por el valor indicado, normalizándolo automáticamente.
+     * 
+     * @pre nombre no es nulo ni está vacío.
+     * @post el nombre del docente se actualiza al valor normalizado.
+     * 
+     * @param nombre nuevo nombre del docente (no nulo, no vacío)
+     * @throws Error si el nombre es nulo o está vacío
+     */
+    public void cambiarNombre(String nombre) {
+        if (nombre == null || nombre.isBlank()) {
+            throw new Error("El nombre ingresado no puede estar vacío.");
+        }
+        this.nombre = this.normalizarNombreDelDocente(nombre);
+    }
 
-		return normalizado;
-	}
+    /**
+     * Devuelve la cátedra del docente.
+     * 
+     * @post devuelve la cátedra actual del docente.
+     * @return nombre de la cátedra
+     */
+    public String obtenerCatedra() {
+        return this.catedra;
+    }
+
+    /**
+     * Cambia la cátedra del docente por el valor indicado.
+     * 
+     * @pre catedra no es nula ni está vacía.
+     * @post la cátedra del docente se actualiza al nuevo valor.
+     * 
+     * @param catedra nueva cátedra (no nula, no vacía)
+     * @throws Error si la cátedra es nula o está vacía
+     */
+    public void cambiarCatedra(String catedra) {
+        if (catedra == null || catedra.isBlank()) {
+            throw new Error("El nombre de la cátedra ingresado no puede estar vacío.");
+        }
+        this.catedra = catedra.trim();
+    }
+
+    /**
+     * Devuelve la antigüedad del docente.
+     * 
+     * @post devuelve la antigüedad actual del docente.
+     * @return cantidad de años de antigüedad
+     */
+    public int obtenerAntiguedad() {
+        return this.antiguedad;
+    }
+
+    /**
+     * Cambia la antigüedad del docente por el valor indicado.
+     * 
+     * @pre antiguedad es mayor o igual a 0.
+     * @post la antigüedad del docente se actualiza al nuevo valor.
+     * 
+     * @param antiguedad nueva antigüedad (mayor o igual a 0)
+     * @throws Error si la antigüedad es menor a 0
+     */
+    public void cambiarAntiguedad(int antiguedad) {
+        if (antiguedad < 0) {
+            throw new Error("La antigüedad no puede ser menor a 0.");
+        }
+        this.antiguedad = antiguedad;
+    }
+
+    /**
+     * Devuelve los datos del docente en formato texto.
+     * 
+     * @post devuelve una representación textual del docente.
+     * @return cadena con los datos del docente
+     */
+    @Override
+    public String toString() {
+        return "[Docente]\n" +
+               "Nombre: " + this.obtenerNombre() +
+               " | Catedra: " + this.obtenerCatedra() +
+               " | Antiguedad: " + this.obtenerAntiguedad();
+    }
+
+    /**
+     * Normaliza el nombre eliminando acentos, caracteres especiales y espacios sobrantes,
+     * y convirtiendo todo a minúsculas.
+     * 
+     * @pre nombre no es nulo ni está vacío.
+     * @post devuelve el nombre normalizado en minúsculas, sin acentos ni caracteres especiales,
+     * y sin espacios redundantes.
+     * 
+     * @param nombre nombre a normalizar
+     * @return nombre normalizado
+     */
+    private String normalizarNombreDelDocente(String nombre) {
+        String normalizado = nombre.trim().toLowerCase();
+        String conAcentos = "áéíóúüñ";
+        String sinAcentos = "aeiouun";
+
+        for (int i = 0; i < conAcentos.length(); i++) {
+            normalizado = normalizado.replace(conAcentos.charAt(i), sinAcentos.charAt(i));
+        }
+
+        normalizado = normalizado.replaceAll("[^a-z0-9 ]", " ");
+        normalizado = normalizado.replaceAll("\\s+", " ");
+
+        return normalizado;
+    }
+
+    /**
+     * Devuelve la identificación del docente en forma de cadena.
+     * En este caso, la identificación es la cátedra que dicta.
+     * 
+     * @post devuelve la cátedra como cadena de texto.
+     * @return nombre de la cátedra del docente
+     */
+    @Override
+    public String obtenerIdentificacion() {
+        return this.catedra;
+    }
 }
