@@ -47,7 +47,7 @@ public class Docente extends Persona {
      */
     public void cambiarNombre(String nombre) {
         if (nombre == null || nombre.isBlank()) {
-            throw new Error("El nombre ingresado no puede estar vacío.");
+            throw new Error("El nombre ingresado no puede estar vacío");
         }
         this.nombre = this.normalizarNombreDelDocente(nombre);
     }
@@ -73,7 +73,7 @@ public class Docente extends Persona {
      */
     public void cambiarCatedra(String catedra) {
         if (catedra == null || catedra.isBlank()) {
-            throw new Error("El nombre de la cátedra ingresado no puede estar vacío.");
+            throw new Error("El nombre de la cátedra ingresado no puede estar vacío");
         }
         this.catedra = catedra.trim();
     }
@@ -99,7 +99,7 @@ public class Docente extends Persona {
      */
     public void cambiarAntiguedad(int antiguedad) {
         if (antiguedad < 0) {
-            throw new Error("La antigüedad no puede ser menor a 0.");
+            throw new Error("La antigüedad no puede ser menor a 0");
         }
         this.antiguedad = antiguedad;
     }

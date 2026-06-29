@@ -45,7 +45,7 @@ public class Alumno extends Persona {
      */
     public void cambiarNombre(String nombre) {
         if (nombre == null || nombre.isBlank()) {
-            throw new Error("El nombre ingresado no puede estar vacío.");
+            throw new Error("El nombre ingresado no puede estar vacío");
         }
         this.nombre = this.normalizarNombreDelAlumno(nombre);
     }
@@ -71,7 +71,7 @@ public class Alumno extends Persona {
      */
     public void cambiarLegajo(int legajo) {
         if (legajo <= 0) {
-            throw new Error("El legajo debe ser un número entero positivo.");
+            throw new Error("El legajo debe ser un número entero positivo");
         }
         this.legajo = legajo;
     }
@@ -97,7 +97,7 @@ public class Alumno extends Persona {
      */
     public void cambiarPromedio(double promedio) {
         if (promedio < 0.0 || promedio > 10.0) {
-            throw new Error("El promedio debe estar entre 0.0 y 10.0.");
+            throw new Error("El promedio debe estar entre 0.0 y 10.0");
         }
         this.promedio = promedio;
     }

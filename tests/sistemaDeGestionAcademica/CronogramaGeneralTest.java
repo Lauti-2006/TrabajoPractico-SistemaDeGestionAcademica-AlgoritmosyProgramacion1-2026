@@ -10,7 +10,7 @@ class CronogramaGeneralTest {
 	void testConstructor() {
 		CronogramaGeneral cronograma = new CronogramaGeneral();
 		assertNull(cronograma.consultarHorario(0, 0));
-		assertNull(cronograma.consultarHorario(4, 2));
+		assertNull(cronograma.consultarHorario(2, 4));
 	}
 
 	
@@ -54,11 +54,11 @@ class CronogramaGeneralTest {
 	@Test
 	void testBuscarComision() {
 		CronogramaGeneral cronograma = new CronogramaGeneral();
-		cronograma.asignarComision(3, 0, "BaseDeDatos");
+		cronograma.asignarComision(0, 2, "BaseDeDatos");
 		int[] posicion = cronograma.buscarComision("BaseDeDatos");
 		assertNotNull(posicion);
-		assertEquals(3, posicion[0]);
-		assertEquals(0, posicion[1]);
+		assertEquals(0, posicion[0]);
+		assertEquals(2, posicion[1]);
 	}
 
 	
@@ -97,7 +97,7 @@ class CronogramaGeneralTest {
 	void testTurnoInvalidoAsignar() {
 		CronogramaGeneral cronograma = new CronogramaGeneral();
 		assertThrows(Error.class, () -> {
-			cronograma.asignarComision(0, 3, "AyP1");
+			cronograma.asignarComision(3, 0, "AyP1");
 		});
 	}
 
@@ -127,7 +127,7 @@ class CronogramaGeneralTest {
 	void testConsultarHorarioDiaInvalido() {
 		CronogramaGeneral cronograma = new CronogramaGeneral();
 		assertThrows(Error.class, () -> {
-			cronograma.consultarHorario(8, 0);
+			cronograma.consultarHorario(0, 8);
 		});
 	}
 
@@ -137,7 +137,7 @@ class CronogramaGeneralTest {
 	void testConsultarHorarioTurnoInvalido() {
 		CronogramaGeneral cronograma = new CronogramaGeneral();
 		assertThrows(Error.class, () -> {
-			cronograma.consultarHorario(0, 5);
+			cronograma.consultarHorario(5, 0);
 		});
 	}
 

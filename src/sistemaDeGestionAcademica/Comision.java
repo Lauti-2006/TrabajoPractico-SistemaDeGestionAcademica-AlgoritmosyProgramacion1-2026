@@ -28,10 +28,10 @@ public class Comision {
         this.cambiarNombre(nombre);
 
         if (cupoAlumnos <= 0) {
-            throw new Error("El cupo de alumnos no debe ser menor o igual a 0.");
+            throw new Error("El cupo de alumnos no debe ser menor o igual a 0");
         }
         if (cupoDocentes <= 0) {
-            throw new Error("El cupo de docentes no debe ser menor o igual a 0.");
+            throw new Error("El cupo de docentes no debe ser menor o igual a 0");
         }
 
         this.alumnos = new Alumno[cupoAlumnos];
@@ -61,7 +61,7 @@ public class Comision {
      */
     public void cambiarNombre(String nombre) {
         if (nombre == null || nombre.isBlank()) {
-            throw new Error("El nombre ingresado no puede estar vacío.");
+            throw new Error("El nombre ingresado no puede estar vacío");
         }
         this.nombre = nombre.trim();
     }
@@ -139,7 +139,7 @@ public class Comision {
             }
         }
         if (alumnoEncontrado == null) {
-            throw new Error("El alumno no está en la comisión.");
+            throw new Error("El alumno no está en la comisión");
         }
         return alumnoEncontrado;
     }
@@ -289,7 +289,7 @@ public class Comision {
         }
 
         if (resultado.isEmpty()) {
-            resultado = "No hay alumnos cargados.";
+            resultado = "No hay alumnos cargados";
         }
 
         return resultado;
@@ -372,11 +372,11 @@ public class Comision {
      */
     public void asignarTurno(int turno, int dia, String materia) {
         if (materia == null || materia.isBlank()) {
-            throw new Error("El nombre de la cátedra no puede estar vacío.");
+            throw new Error("El nombre de la cátedra no puede estar vacío");
         }
-        boolean asignado = this.cronograma.asignarComision(dia, turno, materia);
+        boolean asignado = this.cronograma.asignarComision(turno, dia, materia);
         if (!asignado) {
-            throw new Error("El horario seleccionado ya está ocupado por otra comisión.");
+            throw new Error("El horario seleccionado ya está ocupado por otra comisión");
         }
     }
 

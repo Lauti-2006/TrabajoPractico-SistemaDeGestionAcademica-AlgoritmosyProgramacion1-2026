@@ -9,7 +9,7 @@ public class CronogramaGeneral {
      * @post se crea un cronograma con todas las posiciones en null (libres).
      */
     public CronogramaGeneral() {
-        this.asignaciones = new String[6][3];
+        this.asignaciones = new String[3][6];
     }
 
     /**
@@ -31,7 +31,7 @@ public class CronogramaGeneral {
      * @throws Error si se intenta asignar un turno no permitido en Sábado (solo Mañana)
      * @throws Error si el nombre de la comisión es nulo o vacío
      */
-    public boolean asignarComision(int dia, int turno, String nombreComision) {
+    public boolean asignarComision(int turno, int dia, String nombreComision) {
         if (dia < 0 || dia > 5) {
             throw new Error("Día erróneo. Debe estar entre 0 y 5.");
         }
@@ -44,10 +44,10 @@ public class CronogramaGeneral {
         if (nombreComision == null || nombreComision.isBlank()) {
             throw new Error("El nombre de la comisión no puede ser nulo ni vacío.");
         }
-        if (this.asignaciones[dia][turno] != null) {
+        if (this.asignaciones[turno][dia] != null) {
             return false;
         }
-        this.asignaciones[dia][turno] = nombreComision;
+        this.asignaciones[turno][dia] = nombreComision;
         return true;
     }
 
@@ -67,7 +67,7 @@ public class CronogramaGeneral {
      * @throws Error si el turno no es válido (fuera de 0-2)
      * @throws Error si se intenta liberar un turno no permitido en Sábado (solo Mañana)
      */
-    public boolean liberarHorario(int dia, int turno) {
+    public boolean liberarHorario(int turno, int dia) {
         if (dia < 0 || dia > 5) {
             throw new Error("Día erróneo. Debe estar entre 0 y 5.");
         }
@@ -77,10 +77,10 @@ public class CronogramaGeneral {
         if (dia == 5 && turno != 0) {
             throw new Error("El sábado solo puede ser a la mañana.");
         }
-        if (this.asignaciones[dia][turno] == null) {
+        if (this.asignaciones[turno][dia] == null) {
             return false;
         }
-        this.asignaciones[dia][turno] = null;
+        this.asignaciones[turno][dia] = null;
         return true;
     }
 
@@ -97,14 +97,14 @@ public class CronogramaGeneral {
      * @throws Error si el día no es válido (fuera de 0-5)
      * @throws Error si el turno no es válido (fuera de 0-2)
      */
-    public String consultarHorario(int dia, int turno) {
+    public String consultarHorario(int turno, int dia) {
         if (dia < 0 || dia > 5) {
             throw new Error("Día erróneo. Debe estar entre 0 y 5.");
         }
         if (turno < 0 || turno > 2) {
             throw new Error("Turno inválido. Debe estar entre 0 y 2.");
         }
-        return this.asignaciones[dia][turno];
+        return this.asignaciones[turno][dia];
     }
 
     /**
@@ -122,9 +122,9 @@ public class CronogramaGeneral {
         StringBuilder resultado = new StringBuilder();
 
         for (int i = 0; i < this.asignaciones.length; i++) {
-            resultado.append(dias[i]).append("\n");
+            resultado.append(turnos[i]).append("\n");
             for (int j = 0; j < this.asignaciones[i].length; j++) {
-                resultado.append("  ").append(turnos[j]).append(": ");
+                resultado.append("  ").append(dias[j]).append(": ");
                 if (this.asignaciones[i][j] == null) {
                     resultado.append("Libre");
                 } else {
@@ -142,7 +142,7 @@ public class CronogramaGeneral {
      * Busca una comisión por su nombre y devuelve su posición en el cronograma.
      * 
      * @pre nombreComision no es nulo ni está vacío.
-     * @post devuelve un arreglo de dos posiciones [día, turno] si la comisión existe,
+     * @post devuelve un arreglo de dos posiciones [turno, dia] si la comisión existe,
      * o null si no se encuentra.
      * 
      * @param nombreComision nombre de la comisión a buscar (no nulo, no vacío)

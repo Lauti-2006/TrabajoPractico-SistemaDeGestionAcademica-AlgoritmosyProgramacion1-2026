@@ -132,11 +132,11 @@ public class Menu {
 	private void imprimirCronograma() {
 		String[][] cronograma = comision.obtenerCronograma();
 		String[] turnos = { "Mañana", "Tarde", "Noche" };
-		IO.println("\tLunes\t\tMartes\t\tMiércoles\tJueves\t\tViernes\t\tSábado");
+		IO.println("\tLunes\t\t\tMartes\t\t\tMiércoles\t\tJueves\t\t\tViernes\t\t\tSábado");
 		for (int i = 0; i < cronograma.length; i++) {
 			IO.print(turnos[i] + "\t");
 			for (int j = 0; j < cronograma[i].length; j++) {
-				IO.print("[" + cronograma[i][j] + "]\t");
+				IO.print("[" + cronograma[i][j] + "]\t\t\t");
 			}
 			IO.println();
 		}

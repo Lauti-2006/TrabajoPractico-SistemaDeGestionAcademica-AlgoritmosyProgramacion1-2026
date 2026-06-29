@@ -193,7 +193,7 @@ class ComisionTest {
 	
 	@Test
 	void listarAlumnosVacioTest() {
-	    assertEquals("No Hay Alumnos Cargados", com.listarAlumnos());
+	    assertEquals("No hay alumnos cargados", com.listarAlumnos());
 	}
 	
 	@Test
@@ -292,6 +292,6 @@ class ComisionTest {
 	    assertEquals("Matemática", cronograma[0][0]);
 	    assertEquals("Física", cronograma[1][1]);
 	    assertEquals("Química", cronograma[2][2]);
-	    assertEquals("Programación", cronograma[5][0]);
+	    assertEquals("Programación", cronograma[0][5]);
 	}
 }
