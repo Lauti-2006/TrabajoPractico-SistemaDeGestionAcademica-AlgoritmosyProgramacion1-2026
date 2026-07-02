@@ -66,8 +66,12 @@ public class Menu {
 			IO.print("> Promedio académico inicial: ");
 			double promedioDeAlta = Double.parseDouble(entrada.nextLine());
 			Alumno nuevoAlumno = new Alumno(nombreDeAlta, legajoDeAlta, promedioDeAlta);
-			comision.darAlumnoDeAlta(nuevoAlumno);
-			IO.println("\n[ÉXITO] Alumno dado de alta correctamente en la comisión.");
+			boolean agregado = comision.darAlumnoDeAlta(nuevoAlumno);
+			if (agregado) {
+				IO.println("\n[ÉXITO] Alumno dado de alta correctamente en la comisión.");
+			} else {
+		        IO.println("\n[ALERTA] No se pudo dar de alta al alumno. Verificá que el legajo no esté duplicado, la comisión esté abierta y haya cupo disponible.");
+		    }
 			break;
 		case 2:
 			IO.println("\n[SISTEMA] BAJA DE ALUMNO");
